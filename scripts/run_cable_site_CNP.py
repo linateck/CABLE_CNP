@@ -142,7 +142,7 @@ class RunCable(object):
 
             # Initial setup and first spin ...
             print("\nSpinup stage: %d\n" % (num))
-            self.inital_spin_setup(site, fname_spin, num)
+            self.inital_spin_setup(site, fname_spin, sci_config, num)
             self.run_me()
             self.clean_up(num, tag="spin")
 
@@ -251,7 +251,7 @@ class RunCable(object):
 
         return (met_files, url, rev)
 
-    def inital_spin_setup(self, site, met_fname, number=None):
+    def inital_spin_setup(self, site, met_fname, sci_config, number=None):
         """
         Initial setup for CASA spinup from zero
         """
@@ -304,6 +304,10 @@ class RunCable(object):
                         "spincasa": ".FALSE.",
                         "output%restart": ".TRUE.",
         }
+        # Make sure the dict isn't empty
+        if bool(sci_config):
+            replace_dict = merge_two_dicts(replace_dict, sci_config)
+            
         adjust_nml_file(self.nml_fname, replace_dict)
 
     def setup_re_spin(self, number=None):
@@ -502,6 +506,11 @@ class RunCable(object):
 
         return (st_yr, en_yr)
 
+def merge_two_dicts(x, y):
+    """Given two dicts, merge them into a new dict as a shallow copy."""
+    z = x.copy()
+    z.update(y)
+    return z
 
 if __name__ == "__main__":
 
