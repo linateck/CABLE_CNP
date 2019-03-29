@@ -95,7 +95,7 @@ class BuildCable(object):
         if error is 1:
             raise("Error changing file to executable")
 
-        cmd = "./%s" % (ofname)
+        cmd = "./%s clean" % (ofname)
         error = subprocess.call(cmd, shell=True)
         if error is 1:
             raise("Error building executable")
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     CFLAGS = '-O2'
     LD = "'-lnetcdf -lnetcdff'"
     LDFLAGS = "'-L/opt/local/lib -O2'"
-    repo = "trunk_CNP" 
+    repo = "trunk_CNP"
     # ------------------------------------------- #
 
     B = BuildCable(src_dir=src_dir, NCDIR=NCDIR, NCMOD=NCMOD, FC=FC,
