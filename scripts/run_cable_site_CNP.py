@@ -495,7 +495,7 @@ class RunCable(object):
             if error is 1:
                 print("Job failed to submit")
 
-    def get_met_years(met_fname):
+    def get_met_years(self, met_fname):
 
         ds = xr.open_dataset(met_fname)
 
