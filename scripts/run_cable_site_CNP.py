@@ -184,7 +184,8 @@ class RunCable(object):
             self.clean_up(number=None, tag="simulation")
 
             add_attributes_to_output_file(self.nml_fname, out_fname, url, rev)
-            shutil.move(nml_fname, os.path.join(self.namelist_dir, nml_fname))
+            ofname = os.path.join(self.namelist_dir, self.nml_fname)
+            shutil.move(self.nml_fname, ofname)
 
     def generate_met_files(self, site, st_yr, en_yr, met_fname):
 
