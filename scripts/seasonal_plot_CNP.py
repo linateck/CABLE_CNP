@@ -122,7 +122,7 @@ def resample_to_seasonal_cycle(df, OBS=False):
 
 if __name__ == "__main__":
 
-    C_fname = "outputs/AU-Tum_2002-2010_OzFlux_Met_C_out_cable_simulation.nc"
-    CN_fname = "outputs/AU-Tum_2002-2010_OzFlux_Met_CN_out_cable_simulation.nc"
-    CNP_fname = "outputs/AU-Tum_2002-2010_OzFlux_Met_CNP_out_cable_simulation.nc"
+    C_fname = "outputs/AU-Tum_C_out_cable_simulation.nc"
+    CN_fname = "outputs/AU-Tum_CN_out_cable_simulation.nc"
+    CNP_fname = "outputs/AU-Tum_CNP_out_cable_simulation.nc"
     main(C_fname, CN_fname, CNP_fname)
