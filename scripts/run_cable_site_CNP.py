@@ -25,6 +25,7 @@ import subprocess
 import multiprocessing as mp
 import numpy as np
 import xarray as xr
+import pandas as pd
 
 sys.path.append("../scripts")
 from cable_utils import adjust_nml_file
