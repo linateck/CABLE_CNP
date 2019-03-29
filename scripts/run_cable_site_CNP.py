@@ -28,10 +28,8 @@ import numpy as np
 sys.path.append("../scripts")
 from cable_utils import adjust_nml_file
 from cable_utils import get_svn_info
-from cable_utils import change_LAI
 from cable_utils import add_attributes_to_output_file
 from cable_utils import check_steady_state
-from cable_utils import get_met_years
 from generate_cable_met_files import GenerateMetFiles
 
 class RunCable(object):
@@ -307,7 +305,7 @@ class RunCable(object):
         # Make sure the dict isn't empty
         if bool(sci_config):
             replace_dict = merge_two_dicts(replace_dict, sci_config)
-            
+
         adjust_nml_file(self.nml_fname, replace_dict)
 
     def setup_re_spin(self, number=None):
