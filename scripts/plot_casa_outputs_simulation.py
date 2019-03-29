@@ -195,35 +195,33 @@ def plot_phosphorus_fluxes(cycle, ds):
     ax6 = fig.add_subplot(3,3,6)
     ax7 = fig.add_subplot(3,3,7)
     ax8 = fig.add_subplot(3,3,8)
-    ax9 = fig.add_subplot(3,3,9)
 
-    ax1.set_title("P fixation (g N/m^2/year)")
-    ax1.plot(ds.time, ds.Pfix[:,0])
+    ax1.set_title("P deposition (g N/m^2/year)")
+    ax1.plot(ds.time, ds.Pdep[:,0])
 
-    ax2.set_title("P deposition (g N/m^2/year)")
-    ax2.plot(ds.time, ds.Pdep[:,0])
+    ax2.set_title("P loss")
+    ax2.plot(ds.time, ds.Ploss[:,0])
 
-    ax3.set_title("P loss")
-    ax3.plot(ds.time, ds.Ploss[:,0])
+    ax3.set_title("P leach")
+    ax3.plot(ds.time, ds.Pleach[:,0])
 
-    ax4.set_title("P leach")
-    ax4.plot(ds.time, ds.Pleach[:,0])
+    ax4.set_title("P uptake")
+    ax4.plot(ds.time, ds.Pup[:,0])
 
-    ax5.set_title("P uptake")
-    ax5.plot(ds.time, ds.Pupland[:,0])
+    ax5.set_title("P gross mineralisation")
+    ax5.plot(ds.time, ds.Pgrossmin[:,0])
 
-    ax6.set_title("P gross mineralisation")
-    ax6.plot(ds.time, ds.Psmin[:,0])
+    ax6.set_title("P net mineralisation")
+    ax6.plot(ds.time, ds.Psnetmin[:,0])
 
-    ax7.set_title("P net mineralisation")
-    ax7.plot(ds.time, ds.Psnet[:,0])
+    ax7.set_title("P immobilisation")
+    ax7.plot(ds.time, ds.Pimmob[:,0])
 
-    ax8.set_title("P immobilisation")
-    ax8.plot(ds.time, ds.Psimm[:,0])
-
-    ax9.set_title("Leaf N:P")
-    ax9.plot(ds.nplant[:,0,0]/ds.cplant[:,0,0])
-
+    ax8.set_title("Plant N:P")
+    ax8.plot(ds.time, ds.PlantNLeaf[:,0,0]/ds.PlantPLeaf[:,0,0], label="Leaf")
+    ax8.plot(ds.time, ds.PlantNWood[:,0,0]/ds.PlantPWood[:,0,0], label="Wood")
+    ax8.plot(ds.time, ds.PlantNRoot[:,0,0]/ds.PlantPRoot[:,0,0], label="Root")
+    ax8.legend(numpoints=1, loc="best")
 
     plot_fname = "%s_simulation_phosphorus_fluxes.pdf" % (cycle)
     plot_dir = "plots"
