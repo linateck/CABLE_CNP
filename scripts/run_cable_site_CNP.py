@@ -132,7 +132,7 @@ class RunCable(object):
             self.experiment_id = "%s_%s" % (site, self.biogeochem_cyc)
             print("\n%s\n" % (site))
 
-            (st_yr, en_yr) = get_met_years(fname)
+            (st_yr, en_yr) = self.get_met_years(fname)
 
             (fname_spin,
              fname_trans,
