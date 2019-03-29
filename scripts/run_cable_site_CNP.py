@@ -135,6 +135,7 @@ class RunCable(object):
             print("\n%s\n" % (site))
 
             (st_yr, en_yr) = get_met_years(fname)
+
             (fname_spin,
              fname_trans,
              fname_sim) = self.generate_met_files(site, st_yr, en_yr, fname)
@@ -171,14 +172,19 @@ class RunCable(object):
 
             # Run transiet simulation from 1850
             print("\nHistorical\n")
-            self.setup_simulation(fname_trans, historical=True, number=num)
+            (out_fname) = self.setup_simulation(fname_trans, historical=True,
+                                                number=num)
             self.run_me()
             self.clean_up(number=None, tag="historical")
 
             print("\nSimulation\n")
-            self.setup_simulation(fname_sim, historical=False, number=num)
+            (out_fname) = self.setup_simulation(fname_sim, historical=False,
+                                                number=num)
             self.run_me()
             self.clean_up(number=None, tag="simulation")
+
+            add_attributes_to_output_file(self.nml_fname, out_fname, url, rev)
+            shutil.move(nml_fname, os.path.join(self.namelist_dir, nml_fname))
 
     def generate_met_files(self, site, st_yr, en_yr, met_fname):
 
@@ -445,6 +451,8 @@ class RunCable(object):
         }
         adjust_nml_file(self.nml_fname, replace_dict)
 
+        return (out_fname)
+
     def clean_up(self, number, tag):
 
         # CASA out file is hardwired!
@@ -484,6 +492,15 @@ class RunCable(object):
             error = subprocess.call(cmd, shell=True)
             if error is 1:
                 print("Job failed to submit")
+
+    def get_met_years(met_fname):
+
+        ds = xr.open_dataset(met_fname)
+
+        st_yr = pd.to_datetime(ds.time[0].values).year
+        en_yr = pd.to_datetime(ds.time[-1].values).year #- 1
+
+        return (st_yr, en_yr)
 
 
 if __name__ == "__main__":
