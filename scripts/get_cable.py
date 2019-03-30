@@ -48,7 +48,7 @@ class GetCable(object):
         else:
             self.get_repo(repo_name, share, need_pass, pswd)
 
-        sefl.get_aux(need_pass, pswd)
+        self.get_aux(need_pass, pswd)
         os.chdir(cwd)
 
     def get_repo_trunk(self, repo_name, need_pass, pswd):
