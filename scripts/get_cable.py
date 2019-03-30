@@ -122,8 +122,9 @@ class GetCable(object):
             if need_pass:
 
                 if share:
-                    cmd = "svn checkout %s/branches/Share/%s --password %s" % \
-                            (self.root, repo_name, pswd)
+                    cmd = ("svn checkout %s/branches/Share/%s --password %s, "
+                           -m %s") % \
+                            (self.root, repo_name, pswd, self.msg)
                 else:
                     cmd = ("svn checkout %s/branches/Users/%s/%s, "
                            "--password %s -m %s") % \
