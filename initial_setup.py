@@ -82,7 +82,8 @@ if not os.path.exists(run_dir):
     os.makedirs(run_dir)
 
 for fname in ["run_cable_site_CNP.py", "seasonal_plot.py", \
-              "seasonal_plot_CNP.py", "plot_casa_outputs_simulation.py"]:
+              "seasonal_plot_CNP.py", "plot_casa_outputs_simulation.py",
+              "clean_up.sh"]:
     infname = os.path.join("scripts", fname)
     ofname = os.path.join(run_dir, fname)
     shutil.copy(infname, ofname)

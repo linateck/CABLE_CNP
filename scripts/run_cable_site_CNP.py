@@ -522,7 +522,7 @@ if __name__ == "__main__":
 
     #------------- Change stuff ------------- #
     met_dir = "/Users/mdekauwe/Desktop/plumber_met"
-    co2_ndep_dir = "/Users/mdekauwe/Desktop/co2_ndep_dir"
+    co2_ndep_dir = "../co2_ndep_dir"
     dump_dir = "dump"
     log_dir = "logs"
     output_dir = "outputs"
