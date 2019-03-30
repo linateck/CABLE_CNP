@@ -49,6 +49,7 @@ class GetCable(object):
             self.get_repo(repo_name, share, need_pass, pswd)
 
         self.get_aux(need_pass, pswd)
+
         os.chdir(cwd)
 
     def get_repo_trunk(self, repo_name, need_pass, pswd):
@@ -153,7 +154,7 @@ class GetCable(object):
                 raise("Error downloading repo")
 
 
-    def checkout_aus(self, need_pass, pswd):
+    def get_aux(self, need_pass, pswd):
         """ Checkout CABLE-AUX """
 
         if need_pass:
