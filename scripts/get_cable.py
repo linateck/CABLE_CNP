@@ -127,8 +127,7 @@ class GetCable(object):
                 else:
                     cmd = ("svn checkout %s/branches/Users/%s/%s, "
                            "--password %s -m %s") % \
-                           (self.root, self.user, repo_name, pswd,
-                            self.msg)
+                           (self.root, self.user, repo_name, pswd, self.msg)
 
                 with tempfile.NamedTemporaryFile(mode='w+t') as f:
                     f.write(cmd)
