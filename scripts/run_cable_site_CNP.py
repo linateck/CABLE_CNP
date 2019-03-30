@@ -152,6 +152,7 @@ class RunCable(object):
 
                 print("\nSpinup stage: %d\n" % (num))
                 self.setup_re_spin(number=num)
+
                 self.run_me()
                 self.clean_up(num, tag="spin")
 
@@ -367,7 +368,7 @@ class RunCable(object):
         cable_rst_ifname = "%s_cable_rst_%d.nc" % (self.experiment_id, number-1)
         cable_rst_ifname = os.path.join(self.restart_dir, cable_rst_ifname)
 
-        casa_rst_ifname = "%s_casa_rst_%d.nc" % (self.experiment_id, number)
+        casa_rst_ifname = "%s_casa_rst_%d.nc" % (self.experiment_id, number-1)
         casa_rst_ifname = os.path.join(self.restart_dir, casa_rst_ifname)
 
         # This will overwrite the current restart file for CASA but that is
@@ -414,6 +415,10 @@ class RunCable(object):
         casa_rst_ifname = os.path.join(self.restart_dir, casa_rst_ifname)
 
         if historical:
+
+            out_fname = "%s_out_cable_historical.nc" % (self.experiment_id)
+            out_fname = os.path.join(self.output_dir, out_fname)
+
             cable_rst_ofname = "%s_cable_rst_%d.nc" % (self.experiment_id, number)
             cable_rst_ofname = os.path.join(self.restart_dir, cable_rst_ofname)
 
@@ -503,7 +508,7 @@ class RunCable(object):
         ds = xr.open_dataset(met_fname)
 
         st_yr = pd.to_datetime(ds.time[0].values).year
-        en_yr = pd.to_datetime(ds.time[-1].values).year #- 1
+        en_yr = pd.to_datetime(ds.time[-1].values).year - 1
 
         return (st_yr, en_yr)
 
