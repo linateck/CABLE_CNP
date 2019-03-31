@@ -508,7 +508,7 @@ class RunCable(object):
         ds = xr.open_dataset(met_fname)
 
         st_yr = pd.to_datetime(ds.time[0].values).year
-        en_yr = pd.to_datetime(ds.time[-1].values).year - 1
+        en_yr = pd.to_datetime(ds.time[-1].values).year #- 1
 
         return (st_yr, en_yr)
 
