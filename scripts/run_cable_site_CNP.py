@@ -349,6 +349,7 @@ class RunCable(object):
                         "output%restart": ".TRUE.",
                         "spincasa": ".FALSE.",
                         "icycle": "%d" % (self.biogeochem_id),
+                        "leaps": ".TRUE.",
         }
         adjust_nml_file(self.nml_fname, replace_dict)
 
@@ -393,6 +394,7 @@ class RunCable(object):
                         #"cable_user%YearStart": "%d" % (st_yr),
                         #"cable_user%YearEnd": "%d" % (en_yr),
                         "output%restart": ".TRUE.",
+                        "leaps": ".FALSE.",
 
         }
         adjust_nml_file(self.nml_fname, replace_dict)
@@ -440,6 +442,7 @@ class RunCable(object):
                             "spinup": ".FALSE.",
                             "output%restart": ".TRUE.",
                             "output%averaging": "'daily'",
+                            "leaps": ".TRUE.",
             }
         else:
             replace_dict = {
@@ -457,6 +460,7 @@ class RunCable(object):
                         "spinup": ".FALSE.",
                         "output%restart": ".FALSE.",
                         "output%averaging": "'daily'",
+                        "leaps": ".TRUE.",
 
         }
         adjust_nml_file(self.nml_fname, replace_dict)
