@@ -238,7 +238,7 @@ def change_LAI(met_fname, site, fixed=None, lai_dir=None):
 
     return new_met_fname
 
-def check_steady_state(experiment_id, restart_dir, num, debug=True):
+def check_steady_state(experiment_id, restart_dir, num, debug=False):
     """
     Check whether the plant (leaves, wood and roots) and soil
     (fast, slow and active) carbon pools have reached equilibrium. To do
@@ -272,7 +272,7 @@ def check_steady_state(experiment_id, restart_dir, num, debug=True):
 
     if debug:
         print("*", num, not_in_equilibrium,
-              "*cplant", np.fabs(prev_cplant - new_cplant),
-              "*csoil", np.fabs(prev_csoil - new_csoil))
+              "*cplant", new_cplant, np.fabs(prev_cplant - new_cplant),
+              "*csoil", new_csoil, np.fabs(prev_csoil - new_csoil))
 
     return not_in_equilibrium
