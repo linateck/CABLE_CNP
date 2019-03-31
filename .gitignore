@@ -4,3 +4,4 @@ build_cable.py
 build_cable_YP.py
 runs/*
 src/*
+scripts/__pycache__/*
