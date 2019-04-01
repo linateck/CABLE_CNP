@@ -31,12 +31,12 @@ def open_casa_and_add_time(fname, start_date):
 if __name__ == "__main__":
 
     cycle = "CN"
-    #fname = "*_%s_out_casa_simulation.nc" % (cycle)
-    #fname = glob.glob(os.path.join("outputs", fname))[0]
-    #ds = open_casa_and_add_time(fname, start_date="01/01/2002")
-    fname = "*_%s_out_casa_historical.nc" % (cycle)
+    fname = "*_%s_out_casa_simulation.nc" % (cycle)
     fname = glob.glob(os.path.join("outputs", fname))[0]
-    ds = open_casa_and_add_time(fname, start_date="01/01/1850")
+    ds = open_casa_and_add_time(fname, start_date="01/01/2002")
+    #fname = "*_%s_out_casa_historical.nc" % (cycle)
+    #fname = glob.glob(os.path.join("outputs", fname))[0]
+    #ds = open_casa_and_add_time(fname, start_date="01/01/1850")
 
 
     cf = ds.cplant[:,0].groupby("time.year").mean().values
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     ncr = ds.nplant[:,2].groupby("time.year").mean().values
 
     print("\n\nPlant C & N")
-    print(np.mean(cf), np.mean(cw), np.mean(cr))
+    print(np.mean(cf), np.mean(cw), np.mean(cr), np.mean(cw/cf))
     print(np.mean(ncf), np.mean(ncw), np.mean(ncr))
     print(np.mean(ncf)/np.mean(cf), np.mean(ncw)/np.mean(cw),
           np.mean(ncr)/np.mean(cr))
@@ -67,15 +67,15 @@ if __name__ == "__main__":
           np.mean(npassive)/np.mean(cpassive))
 
 
-    nmin = ds.Nsnet[:].groupby("time.year").mean().values
-    ndep = ds.Nmindep[:].groupby("time.year").mean().values
-    nfix = ds.Nminfix[:].groupby("time.year").mean().values
+    nmin = ds.Nsnet[:].groupby("time.year").sum().values
+    ndep = ds.Nmindep[:].groupby("time.year").sum().values
+    nfix = ds.Nminfix[:].groupby("time.year").sum().values
     input = nmin + nfix + ndep
 
-    nleach = ds.Nminleach[:].groupby("time.year").mean().values
-    nup = ds.Nupland[:].groupby("time.year").mean().values
-    ndep = ds.Nmindep[:].groupby("time.year").mean().values
-    nloss = ds.Nminloss[:].groupby("time.year").mean().values
+    nleach = ds.Nminleach[:].groupby("time.year").sum().values
+    nup = ds.Nupland[:].groupby("time.year").sum().values
+    ndep = ds.Nmindep[:].groupby("time.year").sum().values
+    nloss = ds.Nminloss[:].groupby("time.year").sum().values
     loss = nloss + nleach + nup
 
     print("\nChange in NpoolM")
@@ -84,3 +84,5 @@ if __name__ == "__main__":
     nimmobilisation = ds.Nsimm[:].groupby("time.year").mean().values
     print("\nN immobilisation")
     print(np.mean(nimmobilisation))
+    print("\nN Uptake")
+    print(np.mean(nup))
