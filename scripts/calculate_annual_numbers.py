@@ -19,37 +19,25 @@ import os
 import xarray as xr
 import glob
 
-def open_casa_and_add_time(met_fname, cycle):
-
-    ds_met = xr.open_dataset(met_fname)
-    df_met = ds_met.Tair.squeeze(dim=["x","y"], drop=True).to_dataframe()
-    df_met = df_met.reset_index()
-    df_met = df_met.set_index('time')
-    diff = df_met.index.minute[1] - df_met.index.minute[0]
-
-    fname = "*_%s_out_casa_simulation.nc" % (cycle)
-    fname = glob.glob(os.path.join("outputs", fname))[0]
-
+def open_casa_and_add_time(fname, start_date):
     ds = xr.open_dataset(fname)
-
-    # hour gap i.e. Tumba
-    if diff == 0:
-        time = pd.date_range(start=df_met.index[0], periods=len(ds.glai),
-                             freq='D')
-    else:
-        time = pd.date_range(start=df_met.index[0], periods=len(ds.glai),
-                             freq='D')
+    N = len(ds.Nupland)
+    first_date = pd.to_datetime(start_date)
+    time = first_date + pd.to_timedelta(np.arange(N), 'D')
     ds['time'] = time
 
     return (ds)
 
 if __name__ == "__main__":
 
-    met_dir = "/Users/mdekauwe/Desktop/CABLE_CNP/runs/met"
-    met_fname = glob.glob(os.path.join(met_dir, "*_simulation.nc"))[0]
     cycle = "CN"
+    #fname = "*_%s_out_casa_simulation.nc" % (cycle)
+    #fname = glob.glob(os.path.join("outputs", fname))[0]
+    #ds = open_casa_and_add_time(fname, start_date="01/01/2002")
+    fname = "*_%s_out_casa_historical.nc" % (cycle)
+    fname = glob.glob(os.path.join("outputs", fname))[0]
+    ds = open_casa_and_add_time(fname, start_date="01/01/1850")
 
-    ds = open_casa_and_add_time(met_fname, cycle)
 
     cf = ds.cplant[:,0].groupby("time.year").mean().values
     cw = ds.cplant[:,1].groupby("time.year").mean().values
