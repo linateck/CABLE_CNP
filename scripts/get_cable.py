@@ -114,8 +114,8 @@ class GetCable(object):
                 if error is 1:
                     raise("Error checking out repo")
 
-            cmd = "svn checkout %s/branches/Share/%s" % \
-                    (self.root, repo_name)
+            cmd = "svn checkout %s/branches/Users/%s/%s" % \
+                    (self.root, self.user, repo_name)
             error = subprocess.call(cmd, shell=True)
             if error is 1:
                 raise("Error downloading repo")
