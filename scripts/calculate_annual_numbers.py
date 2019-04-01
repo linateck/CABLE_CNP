@@ -84,5 +84,7 @@ if __name__ == "__main__":
     nimmobilisation = ds.Nsimm[:].groupby("time.year").mean().values
     print("\nN immobilisation")
     print(np.mean(nimmobilisation))
-    print("\nN Uptake - GDAY Eucf 4-5 g N m-2 y-1")
+    print("\nN Uptake - GDAY Eucf 10 g N m-2 y-1")
+    print(np.mean(nup))
+    print("\nN gross mineralisation - Eucf 10 g N m-2 y-1")
     print(np.mean(nup))
