@@ -97,12 +97,11 @@ def plot_nitrogen_fluxes(cycle, ds):
     ax8 = fig.add_subplot(3,3,8)
     ax9 = fig.add_subplot(3,3,9)
 
+    ax1.set_title("N deposition (g N/m^2/year)")
+    ax1.plot(ds.time, ds.Nmindep[:,0])
 
-    ax1.set_title("N fixation (g N/m^2/year)")
-    ax1.plot(ds.time, ds.Nminfix[:,0], label="Nfix")
-
-    ax2.set_title("N deposition (g N/m^2/year)")
-    ax2.plot(ds.time, ds.Nmindep[:,0])
+    ax2.set_title("N fixation (g N/m^2/year)")
+    ax2.plot(ds.time, ds.Nminfix[:,0], label="Nfix")
 
     ax3.set_title("N loss (g N/m^2/year)")
     ax3.plot(ds.time, ds.Nminloss[:,0])
@@ -197,35 +196,25 @@ def plot_phosphorus_fluxes(cycle, ds):
     fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
                 pad_inches=0.1)
 
+def open_casa_and_add_time(fname, start_date):
+    ds = xr.open_dataset(fname)
+    N = len(ds.Nupland)
+    first_date = pd.to_datetime(start_date)
+    time = first_date + pd.to_timedelta(np.arange(N), 'D')
+    ds['time'] = time
+
+    return (ds)
 
 
 if __name__ == "__main__":
 
-    met_dir = "/Users/mdekauwe/Desktop/CABLE_CNP/runs/met"
-    met_fname = glob.glob(os.path.join(met_dir, "*_simulation.nc"))[0]
-
-    ds_met = xr.open_dataset(met_fname)
-
-    df_met = ds_met.Tair.squeeze(dim=["x","y"], drop=True).to_dataframe()
-    df_met = df_met.reset_index()
-    df_met = df_met.set_index('time')
-    diff = df_met.index.minute[1] - df_met.index.minute[0]
+    cycle = "CN"
 
     #for cycle in ["C", "CN", "CNP"]:
     for cycle in ["CN"]:
         fname = "*_%s_out_casa_simulation.nc" % (cycle)
         fname = glob.glob(os.path.join("outputs", fname))[0]
-
-        ds = xr.open_dataset(fname)
-
-        # hour gap i.e. Tumba
-        if diff == 0:
-            time = pd.date_range(start=df_met.index[0], periods=len(ds.glai),
-                                 freq='D')
-        else:
-            time = pd.date_range(start=df_met.index[0], periods=len(ds.glai),
-                                 freq='D')
-        ds['time'] = time
+        ds = open_casa_and_add_time(fname, start_date="01/01/2002")
 
         plot_carbon_fluxes(cycle, ds)
         plot_nitrogen_fluxes(cycle, ds)
