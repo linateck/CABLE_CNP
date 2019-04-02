@@ -63,7 +63,7 @@ def plot_carbon_fluxes(cycle, ds):
     ax6.set_title("C labile")
     ax6.plot(ds.time, ds.clabile[:,0])
 
-    plot_fname = "%s_simulation_carbon_fluxes.pdf" % (cycle)
+    plot_fname = "%s_historical_carbon_fluxes.pdf" % (cycle)
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
@@ -128,7 +128,7 @@ def plot_nitrogen_fluxes(cycle, ds):
     ax9.legend(numpoints=1, loc="best")
 
 
-    plot_fname = "%s_simulation_nitrogen_fluxes.pdf" % (cycle)
+    plot_fname = "%s_historical_nitrogen_fluxes.pdf" % (cycle)
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
@@ -187,7 +187,74 @@ def plot_phosphorus_fluxes(cycle, ds):
     ax8.plot(ds.time, ds.pplant[:,2]/ds.nplant[:,2], label="Root")
     ax8.legend(numpoints=1, loc="best")
 
-    plot_fname = "%s_simulation_phosphorus_fluxes.pdf" % (cycle)
+    plot_fname = "%s_historical_phosphorus_fluxes.pdf" % (cycle)
+    plot_dir = "plots"
+    if not os.path.exists(plot_dir):
+        os.makedirs(plot_dir)
+
+    fig.tight_layout()
+    fig.savefig(os.path.join(plot_dir, plot_fname), bbox_inches='tight',
+                pad_inches=0.1)
+
+def plot_cnp_states(cycle, ds):
+
+    fig = plt.figure(figsize=(15,6))
+    fig.subplots_adjust(hspace=0.3)
+    fig.subplots_adjust(wspace=0.3)
+    plt.rcParams['text.usetex'] = False
+    plt.rcParams['font.family'] = "sans-serif"
+    plt.rcParams['font.sans-serif'] = "Helvetica"
+    plt.rcParams['axes.labelsize'] = 12
+    plt.rcParams['font.size'] = 12
+    plt.rcParams['legend.fontsize'] = 12
+    plt.rcParams['xtick.labelsize'] = 12
+    plt.rcParams['ytick.labelsize'] = 12
+
+    ax1 = fig.add_subplot(2,3,1)
+    ax2 = fig.add_subplot(2,3,2)
+    ax3 = fig.add_subplot(2,3,3)
+    ax4 = fig.add_subplot(2,3,4)
+    ax5 = fig.add_subplot(2,3,5)
+    ax6 = fig.add_subplot(2,3,6)
+
+
+    ax1.set_title("Carbon")
+    ax1.plot(ds.time, ds.cplant[:,0], label="Cf")
+    ax1.plot(ds.time, ds.cplant[:,1], label="Cr")
+    ax1.plot(ds.time, ds.cplant[:,2], label="Cw")
+    ax1.legend(numpoints=1, loc="best")
+
+    ax2.set_title("N plant")
+    ax2.plot(ds.time, ds.nplant[:,0], label="Cf")
+    ax2.plot(ds.time, ds.nplant[:,1], label="Cr")
+    ax2.plot(ds.time, ds.nplant[:,2], label="Cw")
+    ax2.legend(numpoints=1, loc="best")
+
+    ax3.set_title("P plant")
+    ax3.plot(ds.time, ds.pplant[:,0], label="Nf")
+    ax3.plot(ds.time, ds.pplant[:,1], label="Nr")
+    ax3.plot(ds.time, ds.pplant[:,2], label="Nw")
+    ax3.legend(numpoints=1, loc="best")
+
+    ax4.set_title("C soil")
+    ax4.plot(ds.time, ds.csoil[:,0], label="Cf")
+    ax4.plot(ds.time, ds.csoil[:,1], label="Cr")
+    ax4.plot(ds.time, ds.csoil[:,2], label="Cw")
+    ax4.legend(numpoints=1, loc="best")
+
+    ax5.set_title("N soil")
+    ax5.plot(ds.time, ds.nsoil[:,0], label="Nf")
+    ax5.plot(ds.time, ds.nsoil[:,1], label="Nr")
+    ax5.plot(ds.time, ds.nsoil[:,2], label="Nw")
+    ax5.legend(numpoints=1, loc="best")
+
+    ax6.set_title("P soil")
+    ax6.plot(ds.time, ds.psoil[:,0], label="Pf")
+    ax6.plot(ds.time, ds.psoil[:,1], label="Pr")
+    ax6.plot(ds.time, ds.psoil[:,2], label="Pw")
+    ax6.legend(numpoints=1, loc="best")
+
+    plot_fname = "%s_historical_state.pdf" % (cycle)
     plot_dir = "plots"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
@@ -219,3 +286,4 @@ if __name__ == "__main__":
         plot_carbon_fluxes(cycle, ds)
         plot_nitrogen_fluxes(cycle, ds)
         plot_phosphorus_fluxes(cycle, ds)
+        plot_cnp_states(cycle, ds)
